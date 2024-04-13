@@ -1,0 +1,26 @@
+﻿@model Treino
+
+<form method="post">
+    <div class="form-group">
+        <label for="alunoId">Aluno:</label>
+        <select class="form-control" id="alunoId" name="AlunoId">
+            @foreach (var item in ViewBag.Alunos as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Exercícios:</label>
+        @foreach (var item in ViewBag.Exercicios as MultiSelectList)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="@($"exercicio-{item.Value}")" name="ExerciciosSelecionados" value="@item.Value">
+                <label class="form-check-label" for="@($"exercicio-{item.Value}")">
+                    @item.Text
+                </label>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Criar Treino</button>
+</form>
