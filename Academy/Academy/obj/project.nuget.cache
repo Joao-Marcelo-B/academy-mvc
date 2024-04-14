@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Eaeho+8qu5NqB+qwSnBkEW9+vWIfcZ/4qoImdp7ob3BLRT+kSdvO1kOb5yzObL23Hb3j/ng3asTnfOKptSBG7Q==",
+  "dgSpecHash": "ZjsSTnkjn1Y6CM/2Fh5iRczEEveo9+1OuPUsnq3tYArn1YW8vlFV93wMaAr3ohUPikNRe7xgnvO8+VJLBek8nA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Joao Marcelo\\Desktop\\Academy\\Academy\\Academy.csproj",
+  "projectFilePath": "C:\\GitHub\\academy-mvc\\Academy\\Academy\\Academy.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Joao Marcelo\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Joao Marcelo\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
