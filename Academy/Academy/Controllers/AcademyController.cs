@@ -10,7 +10,6 @@ namespace Academy.Controllers
     public class AcademyController : Controller
     {
         private readonly AcademyContext _academy;
-
         public AcademyController(AcademyContext academy)
         {
             _academy = academy;
@@ -18,15 +17,14 @@ namespace Academy.Controllers
 
         public ActionResult Index()
         {
-            return View(_academy.Alunos.Include(x => x.Personal));
+            return View(_academy.Alunos.Include(x => x.Treinos).Include(x => x.Personal));
         }
 
         public IActionResult Details(int id)
         {
             var aluno = _academy.Alunos.Find(id);
-            var treino = _academy.Treinos.Include(x => x.Aluno).Include(x => x.Exercicios).FirstOrDefault(x => x.AlunoId == id);
 
-            return View(treino);
+            return View(aluno);
         }
 
         public IActionResult Create()
@@ -85,6 +83,7 @@ namespace Academy.Controllers
         [HttpPost]
         public IActionResult CreateTreinos(Treino treino, int[] ExerciciosSelecionados)
         {
+            treino.Data = DateTime.Now;
             treino.Exercicios = new List<Exercicio>();
             if (ExerciciosSelecionados != null)
             {
@@ -106,13 +105,49 @@ namespace Academy.Controllers
 
         public IActionResult DeleteTreinos(int id)
         {
-            var treino = _academy.Treinos.Find(id);
+            var treino = _academy.Treinos.Include(x => x.Aluno).FirstOrDefault(x => x.TreinoId == id);
 
             var alunoId = treino.AlunoId;
 
             _academy.Treinos.Remove(treino);
             _academy.SaveChanges();
-            return RedirectToAction("Details", alunoId);
+            return RedirectToAction("DetailsTreino", new { id = alunoId });
+        }
+
+        public IActionResult DetailsTreino(int id)
+        {
+            var treino = _academy.Treinos.Where(x => x.AlunoId == id).Include(x => x.Aluno).Include(x => x.Exercicios).ToList();  
+            ViewBag.Aluno = _academy.Alunos.Find(id).Nome;
+            return View(treino);
+        }
+
+        public IActionResult EditTreino(int id)
+        {
+            var treino = _academy.Treinos.Include(x => x.Aluno).Include(x => x.Exercicios).FirstOrDefault(x => x.TreinoId == id);
+            ViewBag.Exercicios = new MultiSelectList(_academy.Exercicios.OrderBy(x => x.Nome), "ExercicioId", "Nome");
+
+            return View(treino);
+        }
+
+        [HttpPost]
+        public IActionResult EditTreino(int treinoId, int[] ExerciciosSelecionados)
+        {
+            var treino = _academy.Treinos.Include(x => x.Aluno).Include(x => x.Exercicios).FirstOrDefault(x => x.TreinoId == treinoId);
+            treino.Exercicios = null;
+            _academy.SaveChanges();
+            treino.Exercicios = new List<Exercicio>();
+            if (ExerciciosSelecionados != null)
+                foreach(var exercicioId in ExerciciosSelecionados)
+                {
+                    var exercicio = _academy.Exercicios.Find(exercicioId);
+                    if (exercicio != null)
+                        treino.Exercicios.Add(exercicio);
+                }
+
+            treino.Data = DateTime.Now;
+            _academy.SaveChanges();
+
+            return RedirectToAction("DetailsTreino", new { id = treino.AlunoId });
         }
     }
 }

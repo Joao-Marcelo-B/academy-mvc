@@ -1,0 +1,46 @@
+﻿@model Academy.Models.Treino
+
+@{
+    ViewData["Title"] = "EditTreino";
+}
+
+<dl class="row">
+    <dt class="col-sm-2">
+        Nome do Aluno
+    </dt>
+
+    <dd class="col-sm-10">
+        @Model.Aluno.Nome
+    </dd>
+</dl>
+
+<form method="post">
+    <div class="form-group">
+        <label>Exercícios:</label>
+        @{
+            
+            foreach (var item in ViewBag.Exercicios as MultiSelectList)
+            {
+                bool isChecked = false;
+                var exercicio = Model.Exercicios.FirstOrDefault(e => e.ExercicioId.ToString().Equals(item.Value));
+                if(exercicio != null)
+                    isChecked = true;
+                
+
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="ExerciciosSelecionados" value="@item.Value" @(isChecked ? "checked" : "")>
+                    <label class="form-check-label")">
+                        @item.Text
+                    </label>
+                </div>
+            }
+        }
+    </div>
+        <input type="hidden" asp-for="@Model.TreinoId" />
+        <button type="submit" class="btn btn-primary">Editar Treino</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,61 @@
+﻿@model List<Academy.Models.Treino>
+
+@{
+    ViewData["Title"] = "DetailsTreino";
+}
+
+<h1>DetailsTreino</h1>
+<dl class="row">
+    <dt class="col-sm-2">
+        Nome do Aluno
+    </dt>
+
+    <dd class="col-sm-10">
+        @ViewBag.Aluno
+    </dd>
+</dl>
+
+
+
+@foreach(var md in Model)
+{
+    <div>
+        <h4>Treino</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+               Data
+            </dt>
+            <dd class="col-sm-10">
+                @md.Data
+            </dd>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Nome</th>
+                        <th>Descricao</th>
+                    </tr>
+                </thead>
+                @foreach(var item in md.Exercicios)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.Nome</td>
+                            <td>@item.Categoria</td>
+                            <td>@item.Descricao</td>
+                        </tr>
+                        </tbody>
+                }
+             </table>
+
+        </dl>
+    </div>
+    <div>
+        <a asp-action="EditTreino" asp-route-id="@md?.TreinoId">Edit</a> |
+        <a asp-action="DeleteTreinos" asp-route-id="@md?.TreinoId">Delete</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+
+<a asp-action="Index">Back to List</a>
