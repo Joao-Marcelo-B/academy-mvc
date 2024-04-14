@@ -1,0 +1,10 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/Academy/.vs/Academy/FileContentIndex
+/Academy/Academy/obj/Debug/net6.0/Academy.AssemblyInfo.cs
+/Academy/Academy/obj/Debug/net6.0/Academy.AssemblyInfoInputs.cache
+/Academy/Academy/obj/Debug/net6.0/Academy.assets.cache
+*.json
+/Academy/Academy/obj/Debug/net6.0/Academy.GeneratedMSBuildEditorConfig.editorconfig
