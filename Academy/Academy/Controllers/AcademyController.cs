@@ -22,7 +22,7 @@ namespace Academy.Controllers
 
         public IActionResult Details(int id)
         {
-            var aluno = _academy.Alunos.Find(id);
+            var aluno = _academy.Alunos.Include(x => x.Personal).FirstOrDefault(x => x.AlunoId == id);
 
             return View(aluno);
         }

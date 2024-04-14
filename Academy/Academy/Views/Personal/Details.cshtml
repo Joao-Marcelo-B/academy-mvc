@@ -1,0 +1,53 @@
+﻿@model Academy.Models.Personal
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Personal</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Especialidade)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Especialidade)
+        </dd>
+
+    <h5>Alunos</h5>
+    <hr/>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th> Nome do Aluno </th>
+                <th> Telefone </th>
+                <th> Email </th>
+            </tr>
+        </thead>
+        @foreach(var aluno in Model.Alunos)
+        {
+            <tbody>
+                <tr>
+                    <td> @(aluno.Nome != null ? aluno.Nome : "")  </td>
+                    <td> @(aluno.Telefone != null ? aluno.Telefone : "") </td>
+                    <td> @(aluno.Email != null ? aluno.Email : "") </td>
+                </tr>
+            </tbody>
+        }
+            
+    </table>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.PersonalId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

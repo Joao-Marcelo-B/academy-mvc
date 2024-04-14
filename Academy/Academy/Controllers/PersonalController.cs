@@ -1,6 +1,7 @@
 ﻿using Academy.Data;
 using Academy.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Academy.Controllers
 {
@@ -30,5 +31,33 @@ namespace Academy.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Details(int id)
+        {
+            var personal = _academy.Personais.Include(x => x.Alunos).FirstOrDefault(x => x.PersonalId == id);
+            return View(personal);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var personal = _academy.Personais.Find(id);
+            _academy.Personais.Remove(personal);
+            _academy.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var personal = _academy.Personais.Find(id);
+            return View(personal);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Personal personal)
+        {
+            _academy.Personais.Update(personal);
+            _academy.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
