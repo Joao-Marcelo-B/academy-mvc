@@ -302,3 +302,6 @@ __pycache__/
 
 # dependencies
 node_modules/
+/Academy/Academy/obj/Debug/net6.0/project.razor.vs.bin
+/Academy/.vs/Academy/v17/.suo
+/Academy/.vs/Academy/v17/DocumentLayout.json
