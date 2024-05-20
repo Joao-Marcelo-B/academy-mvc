@@ -5,11 +5,23 @@ namespace Academy.Controllers
 {
     public class SessionController : Controller
     {
-        private static List<Usuario> usuarios = new();
+        private static List<Usuario> usuarios = new()
+        {
+            new()
+            {
+                Nome = "Admin",
+                Email = "admin@admin.com",
+                Senha = "admin"
+            }
+        };
 
         public IActionResult Index()
         {
-            return View();
+            var acesso = HttpContext.Session.GetString("usuario_session");
+            if(acesso == null)
+                return RedirectToAction("Login");
+
+            return View(usuarios);
         }
 
         public IActionResult Create()
@@ -22,11 +34,12 @@ namespace Academy.Controllers
         {
             usuarios.Add(usuario);
             usuario.UsuarioId = usuarios.Select(u => u.UsuarioId).Max() + 1;
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
 
         public IActionResult Login()
         {
+
             return View();
         }
 
@@ -37,17 +50,12 @@ namespace Academy.Controllers
             if(confirma != null)
             {
                 HttpContext.Session.SetString("usuario_session", confirma.Nome);
-                return RedirectToAction("Correto");
+                return RedirectToAction("Index", "Academy");
             }
             else
             {
                 return RedirectToAction("Login");
             }
-        }
-
-        public IActionResult Correto()
-        {
-            return View();
         }
     }
 }

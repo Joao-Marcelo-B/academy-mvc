@@ -12,5 +12,6 @@ namespace Academy.Data
         public DbSet<Personal> Personais { get; set; }
         public DbSet<Treino> Treinos { get; set; }
         public DbSet<Exercicio> Exercicios { get; set; }
+        public DbSet<Academy.Models.Usuario> Usuario { get; set; }
     }
 }
